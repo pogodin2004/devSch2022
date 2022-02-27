@@ -1,0 +1,23 @@
+
+server {
+    listen {{ nginx_port_no_tls }};
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    server_name node1;
+    location / {
+            try_files $uri $uri/ =404;
+    }
+}
+
+server {
+    listen {{ nginx_port_ssl_manual }} ssl;
+
+    ssl_certificate {{ nginx_crt_dir }}/{{ nginx_crt_file }};
+    ssl_certificate_key {{ nginx_pem_dir }}/{{ nginx_pem_file }};
+    root /usr/share/nginx/html;
+    index index.html index.htm;
+    server_name node1;
+    location / {
+            try_files $uri $uri/ =404;
+    }
+}
